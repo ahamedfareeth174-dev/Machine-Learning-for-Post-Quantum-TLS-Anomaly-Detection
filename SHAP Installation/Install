@@ -1,0 +1,6 @@
+#Install 
+## SHAP can be installed from either PyPI or conda-forge:
+
+pip install shap
+or
+conda install -c conda-forge shap
