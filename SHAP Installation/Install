@@ -4,3 +4,6 @@
 pip install shap
 or
 conda install -c conda-forge shap
+or 
+# using Windows 
+py -m pip install shap
