@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+artifacts/*.joblib
+artifacts/*.csv
+artifacts/*.json
+!artifacts/.gitkeep
+.DS_Store
+Thumbs.db
+_inspect_tmp.py
+report/_build_presentation.py
+report/SPEAKER_NOTES.md

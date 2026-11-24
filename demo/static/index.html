@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PQC-TLS Sentinel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow">CSC 502 · CIC-PQC_OAV 2025</p>
+      <a class="brand" href="#">PQC-TLS Sentinel</a>
+    </div>
+    <nav>
+      <a href="#analyzer">Analyzer</a>
+      <a href="#metrics">Metrics</a>
+      <a href="https://www.unb.ca/cic/datasets/pqc-oav-dataset-2025.html" target="_blank" rel="noreferrer">Dataset</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker">Operational assurance for hybrid TLS 1.3</p>
+        <h1>PQC-TLS<br />Sentinel</h1>
+        <p class="lede">
+          Detect anomalous Post-Quantum TLS handshakes from encrypted metadata —
+          then inspect which features drive each decision.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#analyzer">Open live analyzer</a>
+          <button class="btn ghost" id="btn-random" type="button">Try a random session</button>
+        </div>
+      </div>
+      <div class="hero-panel" aria-hidden="true">
+        <div class="radar">
+          <span></span><span></span><span></span>
+          <div class="pulse"></div>
+        </div>
+        <ul class="hero-stats" id="hero-stats">
+          <li><strong>—</strong><span>sessions</span></li>
+          <li><strong>—</strong><span>features</span></li>
+          <li><strong>—</strong><span>anomaly rate</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="analyzer" id="analyzer">
+      <div class="section-head">
+        <h2>Session analyzer</h2>
+        <p>Load a held-out test session or edit features manually. Predictions use models trained on the official train split.</p>
+      </div>
+
+      <div class="analyzer-grid">
+        <aside class="panel controls">
+          <label class="field">
+            <span>Model</span>
+            <select id="model-select"></select>
+          </label>
+
+          <label class="field">
+            <span>Demo session</span>
+            <select id="session-select">
+              <option value="">Custom / blank form</option>
+            </select>
+          </label>
+
+          <div class="session-meta" id="session-meta" hidden>
+            <p><span>Ground truth</span> <strong id="meta-label">—</strong></p>
+            <p><span>Subtype</span> <strong id="meta-subtype">—</strong></p>
+            <p><span>Taxonomy</span> <strong id="meta-taxonomy">—</strong></p>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn primary" id="btn-predict" type="button">Classify session</button>
+            <button class="btn ghost" id="btn-reset" type="button">Reset defaults</button>
+          </div>
+        </aside>
+
+        <div class="panel result" id="result-panel">
+          <p class="result-idle">Run a classification to see probability, decision threshold, and feature contributions.</p>
+          <div class="result-body" hidden>
+            <div class="verdict" id="verdict">
+              <p class="verdict-label">Prediction</p>
+              <h3 id="pred-label">—</h3>
+              <p class="prob-line">
+                Anomaly probability
+                <strong id="pred-prob">—</strong>
+                <span id="pred-threshold"></span>
+              </p>
+            </div>
+            <div class="meter" aria-hidden="true">
+              <div class="meter-fill" id="meter-fill"></div>
+              <div class="meter-threshold" id="meter-threshold"></div>
+            </div>
+            <h4>Top feature contributions</h4>
+            <ul class="contrib" id="contrib-list"></ul>
+            <p class="footnote" id="contrib-note"></p>
+          </div>
+        </div>
+      </div>
+
+      <details class="feature-drawer" open>
+        <summary>Feature inputs</summary>
+        <form id="feature-form" class="feature-form"></form>
+      </details>
+    </section>
+
+    <section class="metrics" id="metrics">
+      <div class="section-head">
+        <h2>Held-out test metrics</h2>
+        <p>Thresholds were selected on validation to maximize anomaly-class F1, then frozen for the test set.</p>
+      </div>
+      <div class="table-wrap">
+        <table id="metrics-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Threshold</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1</th>
+              <th>PR-AUC</th>
+              <th>ROC-AUC</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Dataset: CIC-PQC_OAV v1 · Explainable ML for Post-Quantum TLS Anomaly Detection</p>
+    <p id="citation"></p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
